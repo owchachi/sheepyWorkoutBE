@@ -34,11 +34,11 @@ app.use((err, req, res, next) => {
   if (err.type === ErrorType.PRISMA) {
     return res.status(400).json({ message: err.message })
   } else if (err.type === ErrorType.INPUT) {
-    return res.status(400).json({ message: 'Invalid input' })
+    return res.status(400).json({ message: req.t('invalid_input') })
   } else if (err.type === ErrorType.ENTITY_PARSE_FAILED) {
-    return res.status(400).json({ message: 'wrong_request_body_format' })
+    return res.status(400).json({ message: req.t('wrong_request_body_format') })
   } else {
-    return res.status(500).json({ message: 'woops thats on me' })
+    return res.status(500).json({ message: req.t('internal_server_error') })
   }
 })
 
