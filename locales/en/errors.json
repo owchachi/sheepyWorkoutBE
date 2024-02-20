@@ -1,0 +1,9 @@
+{
+  "not_authorized": "Not authorized.",
+  "invalid_token": "Invalid token.",
+  "user_credentials_invalid": "User credentials are invalid.",
+  "internal_server_error": "Internal server error.",
+  "invalid_input": "Invalid input.",
+  "fields_unique": "Those fields has to be unique: {{fields}}.",
+  "wrong_request_body_format": "Wrong request body format."
+}
