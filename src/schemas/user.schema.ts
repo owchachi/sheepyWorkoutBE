@@ -1,8 +1,4 @@
 import { object, string } from 'zod'
-import i18next from 'i18next'
-
-const { t } = i18next
-
 /**
  * @openapi
  * components:
@@ -32,11 +28,7 @@ const { t } = i18next
 
 export const createUserSchema = object({
   body: object({
-    email: string({
-      required_error: t('field_required', { field: 'email' }),
-    }).email('Not a valid email'),
-    password: string({
-      required_error: t('field_required', { field: 'password' }),
-    }).min(6, 'Password too short - should be 6 chars minimum'),
+    email: string().email(),
+    password: string().min(6),
   }),
 })
