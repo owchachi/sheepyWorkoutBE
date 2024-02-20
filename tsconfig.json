@@ -6,7 +6,34 @@
       "strict": false,
       "lib": ["esnext"],
       "esModuleInterop": true,
-      "declaration": true
+      "declaration": true,
+      "baseUrl": "./src",
+      "paths": {
+        "@handlers/*": [
+          "handlers/*"
+        ],
+        "@type/*": [
+          "types/*"
+        ],
+        "@modules/*": [
+          "modules/*"
+        ],
+        "@routes/*": [
+          "routes/*"
+        ],
+        "@middlewares/*": [
+          "middlewares/*"
+        ],
+        "@schemas/*": [
+          "schemas/*"
+        ],
+        "@utils/*": [
+          "utils/*"
+        ],
+        "@db/*": [
+          "db"
+        ]
+      }
     },
-    "include": ["src/**/*.ts"]
+    "include": ["index.d.ts, global.d.ts", "src/**/*.ts", ]
   }
