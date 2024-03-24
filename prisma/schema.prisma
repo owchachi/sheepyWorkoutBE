@@ -14,8 +14,58 @@ model User {
     id        String   @id @default(uuid())
     createdAt DateTime @default(now())
 
-    email     String  @unique
-    username  String? @unique
-    password  String
-    avatarUrl String?
+    email                  String                   @unique @db.VarChar(255)
+    username               String?                  @unique @db.VarChar(255)
+    password               String                   @db.VarChar(255)
+    avatarUrl              String?
+    createdTrainingPlans   TrainingPlan[]
+    UserSavedTrainingPlans UserSavedTrainingPlans[]
+    createdExercises       Exercise[]
+}
+
+model TrainingPlan {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+
+    imageUrl                   String?
+    name                       String                       @db.VarChar(255)
+    description                String
+    isPublic                   Boolean                      @default(true)
+    workoutLength              DateTime?                    @db.Time()
+    createdById                String
+    createdBy                  User                         @relation(fields: [createdById], references: [id])
+    UserSavedTrainingPlans     UserSavedTrainingPlans[]
+    ExerciseAssignedToTraining ExerciseAssignedToTraining[]
+}
+
+model UserSavedTrainingPlans {
+    trainingPlan   TrainingPlan @relation(fields: [trainingPlanId], references: [id])
+    trainingPlanId String
+    userId         String
+    user           User         @relation(fields: [userId], references: [id])
+
+    @@id([userId, trainingPlanId])
+}
+
+model Exercise {
+    id        String   @id @default(uuid())
+    createdAt DateTime @default(now())
+
+    name                       String                       @db.VarChar(255)
+    description                String
+    imageUrl                   String?
+    createdById                String
+    createdBy                  User                         @relation(fields: [createdById], references: [id])
+    ExerciseAssignedToTraining ExerciseAssignedToTraining[]
+}
+
+model ExerciseAssignedToTraining {
+    trainingPlan   TrainingPlan @relation(fields: [trainingPlanId], references: [id])
+    trainingPlanId String
+    exerciseId     String
+    exercise       Exercise     @relation(fields: [exerciseId], references: [id])
+    numOfReps      Int
+    numOfSeries    Int
+
+    @@id([exerciseId, trainingPlanId])
 }

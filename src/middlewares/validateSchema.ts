@@ -9,6 +9,7 @@ export const validateSchema =
         query: req.query,
         params: req.params,
       })
+
       next()
     } catch (e) {
       return res.status(400).send(e.errors)

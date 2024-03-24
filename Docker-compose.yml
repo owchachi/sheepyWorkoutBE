@@ -1,0 +1,29 @@
+version: '3'
+services:
+  web:
+    container_name: sheepy_workout_be
+    build: .
+    ports:
+      - '3001:3001'
+      - '3002:3002'
+    volumes:
+      - .:/home/node/code
+      - /home/node/code/node_modules
+    links:
+      - db
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: ${PORT}
+  db:
+    image: postgres:16.2-bullseye
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+volumes:
+  pg-data:
