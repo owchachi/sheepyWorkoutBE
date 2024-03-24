@@ -8,7 +8,7 @@ export const authPublicRouter = Router()
 
 /**
  * @openapi
- * '/signIn':
+ * '/sign-in':
  *  post:
  *     tags:
  *     - Auth
@@ -31,4 +31,4 @@ export const authPublicRouter = Router()
  *      400:
  *        description: Bad request
  */
-authPublicRouter.post('/signIn', validateSchema(signInSchema), asyncHandler(signIn))
+authPublicRouter.post('/sign-in', validateSchema(signInSchema), asyncHandler(signIn))

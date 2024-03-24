@@ -8,7 +8,8 @@ interface ErrorWithType extends Error {
 }
 
 export const asyncHandler =
-  (fn: RequestHandler) => (req: Request, res: Response, next: NextFunction) =>
+  (fn: RequestHandler<object, object, object, object>) =>
+  (req: Request, res: Response, next: NextFunction) =>
     Promise.resolve(fn(req, res, next)).catch((e: ErrorWithType) => {
       if (e instanceof Prisma.PrismaClientKnownRequestError) {
         e.type = ErrorType.PRISMA

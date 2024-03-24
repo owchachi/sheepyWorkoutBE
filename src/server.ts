@@ -6,6 +6,7 @@ import i18next from 'i18next'
 import i18NextBackend from 'i18next-fs-backend'
 import i18NextMiddleware from 'i18next-http-middleware'
 import swaggerDocs from '@utils/swagger'
+import { protect } from '@modules/auth'
 import { privateRouter, publicRouter } from '@routes/index'
 
 i18next
@@ -26,11 +27,11 @@ app.use(cors())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-app.use('/api', privateRouter)
+app.use('/api', protect, privateRouter)
 app.use(publicRouter)
+swaggerDocs(app, parseInt(process.env.PORT))
 
 app.use((err, req, res, next) => {
-  console.log(err)
   if (err.type === ErrorType.PRISMA) {
     return res.status(400).json({ message: err.message })
   } else if (err.type === ErrorType.INPUT) {
@@ -41,7 +42,8 @@ app.use((err, req, res, next) => {
     return res.status(500).json({ message: req.t('internal_server_error') })
   }
 })
-
-swaggerDocs(app, parseInt(process.env.PORT))
+app.use(function (req, res) {
+  res.status(404).json({ message: req.t('internal_server_error') })
+})
 
 export default app
